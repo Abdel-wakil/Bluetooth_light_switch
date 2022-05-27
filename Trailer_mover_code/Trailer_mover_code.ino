@@ -13,8 +13,8 @@ int xAxis=140, yAxis=140;
 
 String BT_msg;
 
-int motorSpeedA = 150;
-int motorSpeedB = 150;
+int motorSpeedA = 80;
+int motorSpeedB = 80;
 
 
 
@@ -39,6 +39,8 @@ void setup() {
 void loop() {
   //xAxis = 140;
   //yAxis = 140;
+
+
 
   while (BT.available() >= 2) {
     xAxis = BT.read();
@@ -133,7 +135,7 @@ void Stop(){
   digitalWrite(in2, LOW); 
   digitalWrite(in3, LOW);
   digitalWrite(in4, LOW);
-  Serial.println("stop");
+  //Serial.println("stop");
 }
 void turnLeft_small(){
 digitalWrite(in1, HIGH);

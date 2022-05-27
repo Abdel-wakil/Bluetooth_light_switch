@@ -19,8 +19,10 @@ int xAxis=140, yAxis=140;
 
 int BT_msg,mot_dpasse_mode_auto=2;
 
-int motorSpeedA = 80;
-int motorSpeedB = 80;
+int value1,value2;
+
+int motorSpeedA = 50;
+int motorSpeedB = 50;
 
 int stay_in_mode_auto;
 
@@ -55,13 +57,19 @@ void loop() {
 
 
   while (BT.available() >= 2) {
-    xAxis = BT.read();
+    value1 = BT.read();         
     delay(10);
-    yAxis = BT.read();
-   Serial.print(xAxis);
-   Serial.print(",");
-   Serial.println(yAxis);
-  }
+    value2 = BT.read();
+    
+    if (value1 != mot_dpasse_mode_auto){
+      xAxis = value1;
+      delay(10);
+      yAxis = value2;
+      Serial.print(xAxis);
+      Serial.print(",");
+      Serial.println(yAxis);
+  
+ 
   delay(10);
   
   // Makes sure we receive corrent values
@@ -108,26 +116,26 @@ else{
     backLeft_small();
   }
   
-  if (BT.available() == 1) {
-   BT_msg = BT.read();
-   Serial.println(BT_msg);
-   if (BT_msg == mot_dpasse_mode_auto){
-    stay_in_mode_auto=1;
-    while (stay_in_mode_auto==1){
-      mode_automatique();
-      delay(1000);
-      
-    }
-    
-   }
 
-  }
 
   
 
   
  //#########################################// 
-}
+    }
+  
+
+    
+
+   
+else {
+  stay_in_mode_auto=1;
+  while (stay_in_mode_auto==1){
+  mode_automatique();  
+   }
+  }
+ }
+}   
 
 
 void forword(){/*Serial.println("forword")*/;
@@ -191,7 +199,7 @@ digitalWrite(in3, LOW);
 digitalWrite(in4, HIGH); 
 }
 void mode_automatique(){
-  Serial.println("mode_automatique is starting");
+  Serial.println("mode_automatique is Active");
   
   detection_DROITE=digitalRead(capteur_IR_DROIT);
   detection_GAUCHE=digitalRead(capteur_IR_GAUCHE);
@@ -204,14 +212,16 @@ void mode_automatique(){
     Serial.println(detection_GAUCHE);
   }
   else if (detection_DROITE==1 && detection_GAUCHE==0){
-    turnRight_small();
+    turnRight();
+    //delay(50);
     Serial.println("tourne droite");
     Serial.print(detection_DROITE);
     Serial.print(",");
     Serial.println(detection_GAUCHE);
   }
   else if (detection_GAUCHE==1 && detection_DROITE==0){
-    turnLeft_small(); 
+    turnLeft(); 
+    //delay(50);
     Serial.println("tourne a gauche");
     Serial.print(detection_DROITE);
     Serial.print(",");
