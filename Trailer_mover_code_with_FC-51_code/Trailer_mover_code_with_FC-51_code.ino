@@ -19,10 +19,10 @@ int xAxis=140, yAxis=140;
 
 int BT_msg,mot_dpasse_mode_auto=2;
 
-int value1,value2;
+int value1 = 140,value2= 140;          
 
-int motorSpeedA = 50;
-int motorSpeedB = 50;
+int motorSpeedA = 100;
+int motorSpeedB = 80;
 
 int stay_in_mode_auto;
 
@@ -52,22 +52,26 @@ void setup() {
 }
 
 void loop() {
-  //xAxis = 140;
-  //yAxis = 140;
+  
+
 
 
   while (BT.available() >= 2) {
     value1 = BT.read();         
     delay(10);
     value2 = BT.read();
+  }
     
     if (value1 != mot_dpasse_mode_auto){
+      analogWrite(enA, 100);
+      analogWrite(enB, 80);
       xAxis = value1;
       delay(10);
       yAxis = value2;
       Serial.print(xAxis);
       Serial.print(",");
       Serial.println(yAxis);
+    }
   
  
   delay(10);
@@ -122,20 +126,22 @@ else{
 
   
  //#########################################// 
-    }
+    
   
 
     
 
    
-else {
+if (value1 == mot_dpasse_mode_auto) {
   stay_in_mode_auto=1;
+  value1=140;
+  value2=140;
   while (stay_in_mode_auto==1){
   mode_automatique();  
    }
   }
- }
-}   
+}
+   
 
 
 void forword(){/*Serial.println("forword")*/;
@@ -200,6 +206,9 @@ digitalWrite(in4, HIGH);
 }
 void mode_automatique(){
   Serial.println("mode_automatique is Active");
+
+  analogWrite(enA, 50);
+  analogWrite(enB, 50);
   
   detection_DROITE=digitalRead(capteur_IR_DROIT);
   detection_GAUCHE=digitalRead(capteur_IR_GAUCHE);
@@ -234,6 +243,7 @@ void mode_automatique(){
     Stop();
     Serial.println("je suis arriver stop");
     stay_in_mode_auto=0;
+
     
   }
   
