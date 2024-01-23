@@ -20,6 +20,7 @@ void setup() {
   // put your setup code here, to run once:
   //Serial.begin(9600);
   servo.attach(9);
+  servo.write(5);
   BTSerial.begin(9600);
   pinMode(Arduino_relay_pin,OUTPUT);
   digitalWrite(Arduino_relay_pin,LOW);
@@ -61,10 +62,10 @@ void loop() {
         delay(1000);
     }
     //angl_rotation_current = BT_msg.toInt();
-    BTSerial.println(angl_rotation_current);
+    //BTSerial.println(angl_rotation_current);
     servo.write(angl_rotation_current);
     History=angl_rotation_current;
-    delay(1000);
+    //delay(1000);
 }
 
 
